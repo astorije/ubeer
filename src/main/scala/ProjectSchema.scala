@@ -32,6 +32,16 @@ object ProjectSchema {
     Field("breweries", ListType(BreweryType),
       description = Some("Returns a list of all breweries"),
       resolve = _.ctx.breweries
+    ),
+    Field("brewery", OptionType(BreweryType),
+      description = Some("Returns a brewery"),
+      arguments = Id :: Nil,
+      resolve = c => c.ctx.brewery(c.arg(Id))
+    ),
+    Field("beer", OptionType(BeerType),
+      description = Some("Returns a beer"),
+      arguments = Id :: Nil,
+      resolve = c => c.ctx.beer(c.arg(Id))
     )
   ))
 

@@ -20,5 +20,5 @@ class Repository {
   val breweries = Repository.breweries
 
   def beer(id: Int) = beers.find(_.id == id)
-  def brewery(id: Int) = beers.find(_.id == id)
+  def brewery(id: Int) = breweries.find(_.id == id)
 }
