@@ -19,6 +19,6 @@ class Repository {
   val beers = Repository.beers
   val breweries = Repository.breweries
 
-  def beer(id: Int) = beers.find(_.id == id)
-  def brewery(id: Int) = breweries.find(_.id == id)
+  def beer(id: Int): Option[Beer] = beers.find(_.id == id)
+  def brewery(id: Int): Option[Brewery] = breweries.find(_.id == id)
 }
