@@ -38,8 +38,8 @@ trait Fetchers {
     (repo: Repository, ids: Seq[Int]) =>
       successful(repo.beers.filter(b => ids contains b.id)),
     (repo: Repository, ids: RelationIds[Beer]) => {
-      val breweryIds = ids.get(beerByBrewery) getOrElse Nil
-      val styleIds = ids.get(beerByStyle) getOrElse Nil
+      val breweryIds = ids(beerByBrewery)
+      val styleIds = ids(beerByStyle)
 
       successful(repo.beers.filter(b => breweryIds.contains(b.brewery_id) || styleIds.contains(b.style_id)))
     })
