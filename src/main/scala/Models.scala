@@ -8,9 +8,7 @@ case class Brewery(
   country: String,
   phone: String,
   website: String,
-  description: String,
-  latitude: String,
-  longitude: String
+  description: String
 ) {
   def beers(allBeers: List[Beer]): List[Beer] =
     allBeers.filter(_.brewery_id == id)
@@ -19,11 +17,10 @@ case class Brewery(
 case class Beer(
   id: Int,
   brewery_id: Int,
+  style_id: Int,
   name: String,
   abv: Double,
-  description: String,
-  style: String,
-  category: String
+  description: String
 ) {
   def brewery(allBreweries: List[Brewery]): Brewery =
     allBreweries.find(_.id == brewery_id).get
