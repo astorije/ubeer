@@ -32,22 +32,22 @@ object Server extends App {
         }
 
         QueryParser.parse(query) match {
-          // Query parsed successfully, time to execute it!
-          case Success(queryAst) => complete(
-            Executor.execute(
-              ProjectSchema.schema,
-              queryAst,
-              new Repository,
-              variables = vars,
-              operationName = operation
-            ).map(OK -> _)
-            .recover {
-              case error: QueryAnalysisError => BadRequest -> error.resolveError
-              case error: ErrorWithResolver => InternalServerError -> error.resolveError
-            }
-          )
+          case Success(queryAst) =>
+            val reposiroty = new Repository
 
-          // Cannot parse GraphQL query, return error
+            complete(
+              Executor.execute(
+                ProjectSchema.schema,
+                queryAst,
+                reposiroty,
+                variables = vars,
+                operationName = operation,
+                deferredResolver = reposiroty.deferredResolver
+              ).map(OK -> _).recover {
+                case error: QueryAnalysisError => BadRequest -> error.resolveError
+                case error: ErrorWithResolver => InternalServerError -> error.resolveError
+              })
+
           case Failure(error) =>
             complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
         }
