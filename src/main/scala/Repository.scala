@@ -1,44 +1,49 @@
 import spray.json._
 import DefaultJsonProtocol._
+import sangria.execution.deferred.{DeferredResolver, Fetcher, Relation, RelationIds}
 
-object Repository {
-  println("Data loaded:")
+import scala.concurrent.Future.successful
 
-  val categorySource = io.Source.fromFile("src/main/resources/categories.json")("UTF-8").mkString.parseJson
-  implicit val categoryFormat = jsonFormat2(Category.apply)
-  val categories = categorySource.convertTo[List[Category]]
+class Repository extends Fetchers {
+  val categories = loadFile[Category]("categories.json")
+  val styles = loadFile[Style]("styles.json")
+  val breweries = loadFile[Brewery]("breweries.json")
+  val beers = loadFile[Beer]("beers.json")
 
-  println(s"  - ${categories.length} categories")
-
-  val styleSource = io.Source.fromFile("src/main/resources/styles.json")("UTF-8").mkString.parseJson
-  implicit val styleFormat = jsonFormat3(Style.apply)
-  val styles = styleSource.convertTo[List[Style]]
-
-  println(s"  - ${styles.length} styles")
-
-  val brewerySource = io.Source.fromFile("src/main/resources/breweries.json")("UTF-8").mkString.parseJson
-  implicit val breweryFormat = jsonFormat10(Brewery.apply)
-  val breweries = brewerySource.convertTo[List[Brewery]]
-
-  println(s"  - ${breweries.length} breweries")
-
-  val beerSource = io.Source.fromFile("src/main/resources/beers.json")("UTF-8").mkString.parseJson
-  implicit val beerFormat = jsonFormat6(Beer.apply)
-  val beers = beerSource.convertTo[List[Beer]]
-
-  println(s"  - ${beers.length} beers")
+  private def loadFile[T : JsonFormat](fileName: String): List[T] =
+    io.Source.fromResource(fileName)("UTF-8").mkString.parseJson.convertTo[List[T]]
 }
 
-class Repository {
-  import Repository._
+trait Fetchers {
+  val categoryFetcher = Fetcher.caching(
+    (repo: Repository, ids: Seq[Int]) =>
+      successful(repo.categories.filter(c => ids contains c.id)))
 
-  val categories = Repository.categories
-  val styles = Repository.styles
-  val beers = Repository.beers
-  val breweries = Repository.breweries
+  val styleByCategory = Relation("byCategory", (s: Style) => Seq(s.category_id))
 
-  def style(id: Int): Option[Style] = Repository.styles.find(_.id == id)
-  def category(id: Int): Option[Category] = Repository.categories.find(_.id == id)
-  def beer(id: Int): Option[Beer] = Repository.beers.find(_.id == id)
-  def brewery(id: Int): Option[Brewery] = Repository.breweries.find(_.id == id)
+  val styleFetcher = Fetcher.relCaching(
+    (repo: Repository, ids: Seq[Int]) =>
+      successful(repo.styles.filter(s => ids contains s.id)),
+    (repo: Repository, ids: RelationIds[Style]) =>
+      successful(repo.styles.filter(s => ids(styleByCategory) contains s.category_id)))
+
+  val breweryFetcher = Fetcher.caching(
+    (repo: Repository, ids: Seq[Int]) =>
+      successful(repo.breweries.filter(b => ids contains b.id)))
+
+  val beerByBrewery = Relation("byBrewery", (b: Beer) => Seq(b.brewery_id))
+  val beerByStyle = Relation("byStyle", (b: Beer) => Seq(b.style_id))
+
+  val beerFetcher = Fetcher.relCaching(
+    (repo: Repository, ids: Seq[Int]) =>
+      successful(repo.beers.filter(b => ids contains b.id)),
+    (repo: Repository, ids: RelationIds[Beer]) => {
+      val breweryIds = ids(beerByBrewery)
+      val styleIds = ids(beerByStyle)
+
+      successful(repo.beers.filter(b => breweryIds.contains(b.brewery_id) || styleIds.contains(b.style_id)))
+    })
+
+  val deferredResolver = DeferredResolver.fetchers(
+    categoryFetcher, styleFetcher, breweryFetcher, beerFetcher)
 }

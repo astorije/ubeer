@@ -1,92 +1,38 @@
-import sangria.macros.derive._
 import sangria.schema._
 
 object ProjectSchema {
   val Id = Argument("id", IntType)
-
-  val CategoryType: ObjectType[Repository, Category] = deriveObjectType(
-    ObjectTypeDescription("A category"),
-    AddFields(
-      Field("styles", ListType(StyleType),
-        resolve = c => c.value.styles(c.ctx.styles)
-      )
-    )
-  )
-
-  val StyleType: ObjectType[Repository, Style] = deriveObjectType(
-    ObjectTypeDescription("A style"),
-    ExcludeFields("category_id"),
-    AddFields(
-      Field("beers", ListType(BeerType),
-        resolve = c => c.value.beers(c.ctx.beers)
-      ),
-      Field("category", CategoryType,
-        resolve = c => c.value.category(c.ctx.categories)
-      )
-    )
-  )
-
-  val BreweryType: ObjectType[Repository, Brewery] = deriveObjectType(
-    ObjectTypeDescription("A brewery"),
-    AddFields(
-      Field("beers", ListType(BeerType),
-        resolve = c => c.value.beers(c.ctx.beers)
-      )
-    )
-  )
-
-  // Type must be specified because of recursion: beer > brewery > beers > ...
-  val BeerType: ObjectType[Repository, Beer] = deriveObjectType(
-    ObjectTypeDescription("A beer"),
-    ExcludeFields("brewery_id", "style_id"),
-    AddFields(
-      Field("style", StyleType,
-        resolve = c => c.value.style(c.ctx.styles)
-      ),
-      Field("brewery", BreweryType,
-        resolve = c => c.value.brewery(c.ctx.breweries)
-      )
-    )
-  )
-
+  
   val QueryType = ObjectType("Query", fields[Repository, Unit](
-    Field("categories", ListType(CategoryType),
+    Field("categories", ListType(Category.graphqlType),
       description = Some("Returns a list of all categories"),
-      resolve = _.ctx.categories
-    ),
-    Field("styles", ListType(StyleType),
+      resolve = _.ctx.categories),
+    Field("styles", ListType(Style.graphqlType),
       description = Some("Returns a list of all styles"),
-      resolve = _.ctx.styles
-    ),
-    Field("beers", ListType(BeerType),
+      resolve = _.ctx.styles),
+    Field("beers", ListType(Beer.graphqlType),
       description = Some("Returns a list of all beers"),
-      resolve = _.ctx.beers
-    ),
-    Field("breweries", ListType(BreweryType),
+      resolve = _.ctx.beers),
+    Field("breweries", ListType(Brewery.graphqlType),
       description = Some("Returns a list of all breweries"),
-      resolve = _.ctx.breweries
-    ),
-    Field("category", OptionType(CategoryType),
+      resolve = _.ctx.breweries),
+
+    Field("category", OptionType(Category.graphqlType),
       description = Some("Returns a category"),
       arguments = Id :: Nil,
-      resolve = c => c.ctx.category(c.arg(Id))
-    ),
-    Field("style", OptionType(StyleType),
+      resolve = c => c.ctx.categoryFetcher.deferOpt(c.arg(Id))),
+    Field("style", OptionType(Style.graphqlType),
       description = Some("Returns a style"),
       arguments = Id :: Nil,
-      resolve = c => c.ctx.style(c.arg(Id))
-    ),
-    Field("brewery", OptionType(BreweryType),
+      resolve = c => c.ctx.styleFetcher.deferOpt(c.arg(Id))),
+    Field("brewery", OptionType(Brewery.graphqlType),
       description = Some("Returns a brewery"),
       arguments = Id :: Nil,
-      resolve = c => c.ctx.brewery(c.arg(Id))
-    ),
-    Field("beer", OptionType(BeerType),
+      resolve = c => c.ctx.breweryFetcher.deferOpt(c.arg(Id))),
+    Field("beer", OptionType(Beer.graphqlType),
       description = Some("Returns a beer"),
       arguments = Id :: Nil,
-      resolve = c => c.ctx.beer(c.arg(Id))
-    )
-  ))
+      resolve = c => c.ctx.beerFetcher.deferOpt(c.arg(Id)))))
 
   val schema = Schema(QueryType)
 }
