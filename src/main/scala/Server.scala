@@ -18,6 +18,9 @@ object Server extends App {
   implicit val materializer = ActorMaterializer()
 
   val route: Route =
+    pathSingleSlash {
+      getFromResource("root.html")
+    } ~
     (get & path("graphiql")) {
       getFromResource("graphiql.html")
     } ~
