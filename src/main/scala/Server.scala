@@ -18,6 +18,9 @@ object Server extends App {
   implicit val materializer = ActorMaterializer()
 
   val route: Route =
+    (get & path("graphiql")) {
+      getFromResource("graphiql.html")
+    } ~
     (post & path("graphql")) {
       entity(as[JsValue]) { requestJson => {
         val JsObject(fields) = requestJson
@@ -52,9 +55,6 @@ object Server extends App {
             complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
         }
       }}
-    } ~
-    get {
-      getFromResource("graphiql.html")
     }
 
   // Prints a human-readable representation of the schema upon server startup
