@@ -21,8 +21,8 @@ object Server extends App {
     pathSingleSlash {
       getFromResource("root.html")
     } ~
-    (get & path("graphiql")) {
-      getFromResource("graphiql.html")
+    pathPrefix("graphiql") {
+      getFromDirectory("graphiql")
     } ~
     (post & path("graphql")) {
       entity(as[JsValue]) { requestJson => {
