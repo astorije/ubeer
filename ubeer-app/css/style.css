@@ -1,0 +1,109 @@
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #050400;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 2px;
+}
+
+/* Make sure the scrollbar is always enabled to avoid flickering due to popovers */
+html {
+  overflow-y: scroll;
+}
+
+/* Optimally-size, fixed background */
+body {
+  background-image: url('../img/background.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+a:focus,
+a:hover,
+a:active:focus,
+a:active:hover {
+  outline: 0;
+}
+
+/* Remove border from brewery panels, cannot be set in Bootstrap config */
+.brewery {
+  border: none;
+}
+
+/* Custom hover and focus for buttons, cannot be set in Bootstrap config */
+.btn-default:focus,
+.btn-default:active:focus,
+.btn-default:hover,
+.btn-default:active:hover {
+  background-color: rgba(0, 0, 0, .8);
+  color: #f0e0ce;
+  outline: 0;
+  border-color: #f0e0ce;
+}
+.btn-default:focus,
+.btn-default:active:focus {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(240, 224, 206, .6);
+}
+
+/* Popover text color cannot be set in Bootstrap config */
+.popover {
+  color: #050400;
+}
+
+/* Main title */
+h1 {
+  margin: 30px;
+  font-size: 48px;
+}
+
+/* Spacing between categories in brewery panels */
+.brewery h3,
+.brewery-block {
+  margin: 0;
+}
+.brewery h3:not(:last-child),
+.brewery-block:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+/* Category labels in brewery panels */
+.brewery-label {
+  color: #999;
+  text-transform: uppercase;
+  font-size: .75em;
+}
+
+/* Beer icons that can be hovered on */
+.beer-popover {
+  font-size: 28px;
+  padding:0;
+  padding-right: 7px;
+}
+/* Beer icon colors depending on their style */
+.beer-popover[data-style-color='white'] {
+  color: #f0e0ce;
+}
+.beer-popover[data-style-color='pale'] {
+  color: #fad37f;
+}
+.beer-popover[data-style-color='blonde'] {
+  color: #f09503;
+}
+.beer-popover[data-style-color='red'] {
+  color: #b02510;
+}
+.beer-popover[data-style-color='dark'] {
+  color: #492912;
+}
+.beer-popover[data-style-color='black'] {
+  color: black;
+  -webkit-text-stroke: 1px #f0e0ce;
+}
+.beer-popover[data-style-color='other'] {
+  color: #999;
+}

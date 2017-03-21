@@ -21,6 +21,9 @@ object Server extends App {
     pathSingleSlash {
       getFromResource("root.html")
     } ~
+    pathPrefix("ubeer") {
+      getFromDirectory("ubeer-app")
+    } ~
     pathPrefix("graphiql") {
       getFromDirectory("graphiql")
     } ~

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ubeer</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/ionicons.css">
+    <link rel="stylesheet" href="css/latofonts.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">UBEER</h1>
+
+      <form id="search">
+        <div class="row form-group">
+          <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter a city">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Search</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div id="breweries" class="row"></div>
+    </div>
+
+    <template id="no-breweries-template">
+      <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+        <div class="panel panel-default brewery">
+          <div class="panel-body">
+            <h3 class="text-center">No breweries found!</h3>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="brewery-template">
+      <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+        <div class="panel panel-default brewery">
+          <div class="panel-body">
+            <h3 class="brewery-name"></h3>
+
+            <div class="brewery-block brewery-address-block">
+              <div class="brewery-label">Address</div>
+              <span class="brewery-address"></span>
+            </div>
+
+            <div class="brewery-block brewery-website-block">
+              <div class="brewery-label">Website</div>
+              <a class="brewery-website" href=""></a>
+            </div>
+
+            <div class="brewery-block brewery-beers-block">
+              <div class="brewery-label">Beers</div>
+              <div class="brewery-beers"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="beer-template">
+      <button type="button" class="btn btn-link beer-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="">
+        <i class="ionicons ion-beer" aria-hidden="true"></i>
+      </button>
+    </template>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
