@@ -3,6 +3,7 @@ import sangria.schema._
 
 object ProjectSchema {
   val Id = Argument("id", IntType)
+  val OptionalCity = Argument("city", OptionInputType(StringType))
 
   val CategoryType: ObjectType[Repository, Category] = deriveObjectType(
     ObjectTypeDescription("A category"),
@@ -44,7 +45,7 @@ object ProjectSchema {
         resolve = c => c.value.style(c.ctx.styles)
       ),
       Field("brewery", BreweryType,
-        resolve = c => c.value.brewery(c.ctx.breweries)
+        resolve = c => c.value.brewery(c.ctx.breweries(None))
       )
     )
   )
@@ -64,7 +65,8 @@ object ProjectSchema {
     ),
     Field("breweries", ListType(BreweryType),
       description = Some("Returns a list of all breweries"),
-      resolve = _.ctx.breweries
+      arguments = OptionalCity :: Nil,
+      resolve = c => c.ctx.breweries(c.arg(OptionalCity))
     ),
     Field("category", OptionType(CategoryType),
       description = Some("Returns a category"),

@@ -35,10 +35,14 @@ class Repository {
   val categories = Repository.categories
   val styles = Repository.styles
   val beers = Repository.beers
-  val breweries = Repository.breweries
 
-  def style(id: Int): Option[Style] = Repository.styles.find(_.id == id)
-  def category(id: Int): Option[Category] = Repository.categories.find(_.id == id)
-  def beer(id: Int): Option[Beer] = Repository.beers.find(_.id == id)
-  def brewery(id: Int): Option[Brewery] = Repository.breweries.find(_.id == id)
+  def breweries(cityOption: Option[String]): List[Brewery] = cityOption match {
+    case None => Repository.breweries
+    case Some(city) => Repository.breweries.filter(_.city == city)
+  }
+
+  def style(id: Int): Option[Style] = styles.find(_.id == id)
+  def category(id: Int): Option[Category] = categories.find(_.id == id)
+  def beer(id: Int): Option[Beer] = beers.find(_.id == id)
+  def brewery(id: Int): Option[Brewery] = breweries(None).find(_.id == id)
 }
