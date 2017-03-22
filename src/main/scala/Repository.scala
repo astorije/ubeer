@@ -45,4 +45,13 @@ class Repository {
   def category(id: Int): Option[Category] = categories.find(_.id == id)
   def beer(id: Int): Option[Beer] = beers.find(_.id == id)
   def brewery(id: Int): Option[Brewery] = breweries(None).find(_.id == id)
+
+  def stylesByCategory(categoryId: Int): List[Style] =
+    styles.filter(_.category_id == categoryId)
+
+  def beersByStyle(styleId: Int): List[Beer] =
+    beers.filter(_.style_id == styleId)
+
+  def beersByBrewery(breweryId: Int): List[Beer] =
+    beers.filter(_.brewery_id == breweryId)
 }

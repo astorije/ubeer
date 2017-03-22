@@ -9,7 +9,7 @@ object ProjectSchema {
     ObjectTypeDescription("A category"),
     AddFields(
       Field("styles", ListType(StyleType),
-        resolve = c => c.value.styles(c.ctx.styles)
+        resolve = c => c.ctx.stylesByCategory(c.value.id)
       )
     )
   )
@@ -19,10 +19,10 @@ object ProjectSchema {
     ExcludeFields("category_id"),
     AddFields(
       Field("beers", ListType(BeerType),
-        resolve = c => c.value.beers(c.ctx.beers)
+        resolve = c => c.ctx.beersByStyle(c.value.id)
       ),
       Field("category", CategoryType,
-        resolve = c => c.value.category(c.ctx.categories)
+        resolve = c => c.ctx.category(c.value.category_id).get
       )
     )
   )
@@ -31,7 +31,7 @@ object ProjectSchema {
     ObjectTypeDescription("A brewery"),
     AddFields(
       Field("beers", ListType(BeerType),
-        resolve = c => c.value.beers(c.ctx.beers)
+        resolve = c => c.ctx.beersByBrewery(c.value.id)
       )
     )
   )
@@ -42,10 +42,10 @@ object ProjectSchema {
     ExcludeFields("brewery_id", "style_id"),
     AddFields(
       Field("style", StyleType,
-        resolve = c => c.value.style(c.ctx.styles)
+        resolve = c => c.ctx.style(c.value.style_id).get
       ),
       Field("brewery", BreweryType,
-        resolve = c => c.value.brewery(c.ctx.breweries(None))
+        resolve = c => c.ctx.brewery(c.value.brewery_id).get
       )
     )
   )
