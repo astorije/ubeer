@@ -15,7 +15,11 @@ object ProjectSchema {
   )
 
   val StyleType: ObjectType[Repository, Style] = deriveObjectType(
-    ObjectTypeDescription("A style"),
+    ObjectTypeDescription(
+      "A style of beer, used to differentiate beers by factors such as " +
+      "colour, flavour, strength, ingredients, production method, recipe, " +
+      "history, or origin."
+    ),
     AddFields(
       Field("beers", ListType(BeerType),
         resolve = c => c.ctx.beersByStyle(c.value.id)
