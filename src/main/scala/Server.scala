@@ -16,6 +16,7 @@ import spray.json._
 object Server extends App {
   implicit val system = ActorSystem("sangria-server")
   implicit val materializer = ActorMaterializer()
+  val repository = new Repository
 
   val route: Route =
     pathSingleSlash {
@@ -46,7 +47,7 @@ object Server extends App {
             Executor.execute(
               ProjectSchema.schema,
               queryAst,
-              new Repository,
+              repository,
               variables = vars,
               operationName = operation
             ).map(OK -> _)
