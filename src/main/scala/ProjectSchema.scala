@@ -16,15 +16,14 @@ object ProjectSchema {
 
   val StyleType: ObjectType[Repository, Style] = deriveObjectType(
     ObjectTypeDescription("A style"),
-    ExcludeFields("category_id"),
     AddFields(
       Field("beers", ListType(BeerType),
         resolve = c => c.ctx.beersByStyle(c.value.id)
-      ),
-      Field("category", CategoryType,
-        resolve = c => c.ctx.category(c.value.category_id).get
       )
-    )
+    ),
+    ReplaceField("category_id", Field("category", CategoryType,
+      resolve = c => c.ctx.category(c.value.category_id).get
+    ))
   )
 
   val BreweryType: ObjectType[Repository, Brewery] = deriveObjectType(
@@ -39,15 +38,12 @@ object ProjectSchema {
   // Type must be specified because of recursion: beer > brewery > beers > ...
   val BeerType: ObjectType[Repository, Beer] = deriveObjectType(
     ObjectTypeDescription("A beer"),
-    ExcludeFields("brewery_id", "style_id"),
-    AddFields(
-      Field("style", StyleType,
-        resolve = c => c.ctx.style(c.value.style_id).get
-      ),
-      Field("brewery", BreweryType,
-        resolve = c => c.ctx.brewery(c.value.brewery_id).get
-      )
-    )
+    ReplaceField("brewery_id", Field("brewery", BreweryType,
+      resolve = c => c.ctx.brewery(c.value.brewery_id).get
+    )),
+    ReplaceField("style_id", Field("style", StyleType,
+      resolve = c => c.ctx.style(c.value.style_id).get
+    ))
   )
 
   val QueryType = ObjectType("Query", fields[Repository, Unit](
