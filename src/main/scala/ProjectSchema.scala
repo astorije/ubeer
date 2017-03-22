@@ -64,7 +64,9 @@ object ProjectSchema {
       resolve = _.ctx.beers
     ),
     Field("breweries", ListType(BreweryType),
-      description = Some("Returns a list of all breweries"),
+      description = Some(
+        "Returns a list of all breweries, optionally filtered by city"
+      ),
       arguments = OptionalCity :: Nil,
       resolve = c => c.ctx.breweries(c.arg(OptionalCity))
     ),
