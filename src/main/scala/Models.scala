@@ -29,4 +29,9 @@ case class Beer(
   name: String,
   abv: Double,
   description: String
-)
+) {
+  def filteredDescription(charLimit: Option[Int]): String = charLimit match {
+    case Some(n) if description.length > n - 1 => description.take(n - 1) + "…"
+    case _ => description
+  }
+}

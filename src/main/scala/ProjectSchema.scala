@@ -4,6 +4,7 @@ import sangria.schema._
 object ProjectSchema {
   val Id = Argument("id", IntType)
   val OptionalCity = Argument("city", OptionInputType(StringType))
+  val OptionalCharLimitArgument = Argument("charLimit", OptionInputType(IntType))
 
   val CategoryType: ObjectType[Repository, Category] = deriveObjectType(
     ObjectTypeDescription("A category"),
@@ -47,6 +48,10 @@ object ProjectSchema {
     )),
     ReplaceField("style_id", Field("style", StyleType,
       resolve = c => c.ctx.style(c.value.style_id).get
+    )),
+    ReplaceField("description", Field("description", StringType,
+      arguments = OptionalCharLimitArgument :: Nil,
+      resolve = c => c.value.filteredDescription(c.arg(OptionalCharLimitArgument))
     ))
   )
 
