@@ -107,3 +107,23 @@ h1 {
 .beer-popover[data-style-color='other'] {
   color: #999;
 }
+
+/* Inversion of all colors when original colors don't render well on projector */
+
+html.inverted-colors {
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -o-filter: invert(100%);
+  -ms-filter: invert(100%);
+}
+
+html.inverted-colors body {
+  background-image: url('../img/background-inverted.jpg');
+}
+
+.invert-colors {
+  position: fixed;
+  padding: 10px 20px;
+  top: 0;
+  right: 0;
+}

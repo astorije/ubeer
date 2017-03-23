@@ -135,4 +135,13 @@ $(function () {
     }
     event.preventDefault();
   });
+
+  const invertColorCheckbox = document.querySelector('.invert-colors input[type=checkbox]');
+  invertColorCheckbox.addEventListener('change', event => {
+    if (invertColorCheckbox.checked) {
+      document.querySelector('html').classList.add('inverted-colors');
+    } else {
+      document.querySelector('html').classList.remove('inverted-colors');
+    }
+  });
 });
