@@ -1,5 +1,15 @@
 # Ubeer
 
+Ubeer is a very simple client-server application where:
+
+- The server exposes a [GraphQL](http://graphql.org/) endpoint using [Sangria](http://sangria-graphql.org/) and Akka HTTP.
+- The client is a Vanilla JS application to locate breweries around you.
+
+It was developed for a lightning talk I gave at
+[NE Scala NYC 2017](http://www.nescala.org/) on 24 March 2017.
+
+The slides of this talk can be find at <https://astori.fr/graphql-nescala>.
+
 ## Running the project
 
 In your console, run:
