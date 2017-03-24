@@ -1,10 +1,27 @@
 # Ubeer
 
+## Running the project
+
+In your console, run:
+
+```sh
+sbt run
+```
+
+This will compile the project, load the JSON files in memory, print the GraphQL
+schema in the console and start the Akka HTTP server.
+
+Once the server is started you can:
+
+- Play with the client app at <http://localhost:8080/ubeer/index.html>.
+- Run queries interactively using [GraphiQL](https://github.com/graphql/graphiql)at <http://localhost:8080/graphiql/index.html> (see below for some examples).
+
 ## Query examples
 
 The following examples illustrate some capabilities GraphQL offers on this project.
 
-Running these from the given links assume that you are running this project locally and that <http://localhost:8080/graphiql/index.html> works accordingly.
+Running these from the links given below assumes that you are running this
+project locally (see above).
 
 ### Arguments
 
