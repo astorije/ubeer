@@ -21,7 +21,7 @@ $(function () {
         beers @skip(if: $skipBeers) {
           name
           abv
-          description
+          description(charLimit: 200)
           style {
             name
           }
