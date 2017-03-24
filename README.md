@@ -14,7 +14,8 @@ schema in the console and start the Akka HTTP server.
 Once the server is started you can:
 
 - Play with the client app at <http://localhost:8080/ubeer/index.html>.
-- Run queries interactively using [GraphiQL](https://github.com/graphql/graphiql)at <http://localhost:8080/graphiql/index.html> (see below for some examples).
+- Run queries interactively using [GraphiQL](https://github.com/graphql/graphiql)
+  at <http://localhost:8080/graphiql/index.html> (see below for some examples).
 
 ## Query examples
 
@@ -36,6 +37,8 @@ project locally (see above).
 }
 ```
 
+[More information about arguments](http://graphql.org/learn/queries/#arguments)
+
 ### Aliases
 
 <a href="http://localhost:8080/graphiql/index.html?query=%7B%0A%20%20beerOne%3A%20beer(id%3A%20360)%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%20%20beerTwo%3A%20beer(id%3A%20440)%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D&variables=">Run this example</a>
@@ -50,6 +53,8 @@ project locally (see above).
   }
 }
 ```
+
+[More information about aliases](http://graphql.org/learn/queries/#aliases)
 
 ### Reusable fragments
 
@@ -73,6 +78,8 @@ fragment beerSummary on Beer {
 }
 ```
 
+[More information about fragments](http://graphql.org/learn/queries/#fragments)
+
 ### Variables
 
 <a href="http://localhost:8080/graphiql/index.html?query=query%20(%24city%3A%20String)%20%7B%0A%20%20breweries(city%3A%20%24city)%20%7B%0A%20%20%20%20name%0A%20%20%20%20address%0A%20%20%20%20website%0A%20%20%7D%0A%7D%0A&variables=%0A%7B%0A%09%22city%22%3A%20%22Brooklyn%22%0A%7D">Run this example</a>
@@ -87,11 +94,15 @@ query ($city: String) {
 }
 ```
 
+And in the *Query variables* tab:
+
 ```json
 {
   "city": "Brooklyn"
 }
 ```
+
+[More information about variables](http://graphql.org/learn/queries/#variables)
 
 ### Directives
 
@@ -111,8 +122,12 @@ query ($skipBeers: Boolean!) {
 }
 ```
 
+And in the *Query variables* tab:
+
 ```json
 {
   "skipBeers": false
 }
 ```
+
+[More information about directives](http://graphql.org/learn/queries/#directives)
