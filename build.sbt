@@ -1,4 +1,4 @@
-name := "beer"
+name := "ubeer"
 version := "0.0.0"
 
 description := "TODO"
