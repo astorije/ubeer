@@ -23,7 +23,7 @@ object Server extends App {
       getFromResource("root.html")
     } ~
     pathPrefix("ubeer") {
-      getFromDirectory("ubeer-app")
+      getFromDirectory("ubeer-client")
     } ~
     pathPrefix("graphiql") {
       getFromDirectory("graphiql")
