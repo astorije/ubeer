@@ -148,3 +148,17 @@ And in the *Query variables* tab:
 ```
 
 [More information about directives](http://graphql.org/learn/queries/#directives)
+
+## About the data
+
+The [JSON data files](https://github.com/astorije/ubeer/tree/master/src/main/resources)
+come from the [Open Beer Database](https://openbeerdb.com/) project, converted
+from CSV to JSON (with some cleanup and reformatting along the way) using
+[this tool](http://www.convertcsv.com/csv-to-json.htm).
+
+Thanks to them for making these available!
+
+However, note that data in these files is dated from 2011, and I had to delete
+more than half the beers whenever they were lacking a style, a brewery, etc.
+If anyone knows of a more up-to-date and sanitized list of beers and breweries,
+let me know!
