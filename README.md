@@ -17,6 +17,14 @@ this talk can be found at <https://astori.fr/graphql-nescala>.
   <em>The Ubeer client &amp; GraphiQL</em>
 </p>
 
+<p align="center">
+  <img alt="Client-Server architecture" src="screenshots/client-server.png" width="400">
+  <br>
+  <img alt="Data model" src="screenshots/data-model.png" width="400">
+  <br>
+  <em>Backend architecture</em>
+</p>
+
 ## Running the project
 
 In your console, run:
