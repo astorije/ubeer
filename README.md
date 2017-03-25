@@ -9,6 +9,14 @@ It was developed for a lightning talk I gave at
 [NE Scala NYC 2017](http://www.nescala.org/) on 24 March 2017. The slides of
 this talk can be found at <https://astori.fr/graphql-nescala>.
 
+<p align="center">
+  <img alt="The Ubeer client" src="screenshots/ubeer.png" width="400">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img alt="GraphiQL" src="screenshots/graphiql.png" width="400">
+  <br>
+  <em>The Ubeer client &amp; GraphiQL</em>
+</p>
+
 ## Running the project
 
 In your console, run:
