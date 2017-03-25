@@ -157,6 +157,47 @@ And in the *Query variables* tab:
 
 [More information about directives](http://graphql.org/learn/queries/#directives)
 
+### Introspection
+
+<a href="http://localhost:8080/graphiql/index.html?query=%7B%0A%20%20__schema%20%7B%0A%20%20%20%20types%20%7B%0A%20%20%20%20%20%20kind%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20description%0A%20%20%20%20%7D%0A%20%20%7D%0A%0A%20%20__type(name%3A%20%22Beer%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20description%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20ofType%20%7B%0A%20%20%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20args%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&variables=">Run this example</a>
+
+```graphql
+{
+  __schema {
+    types {
+      kind
+      name
+      description
+    }
+  }
+
+  __type(name: "Beer") {
+    kind
+    name
+    description
+    fields {
+      name
+      type {
+        kind
+        name
+        ofType {
+          name
+        }
+      }
+      args {
+        name
+        type {
+          kind
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+[More information about introspection](http://graphql.org/learn/introspection/)
+
 ## About the data
 
 The [JSON data files](https://github.com/astorije/ubeer/tree/master/src/main/resources)
