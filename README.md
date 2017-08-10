@@ -10,6 +10,16 @@ It was developed for a lightning talk I gave at
 this talk can be found at <https://astori.fr/graphql-nescala>.
 
 <p align="center">
+  <a href="https://www.youtube.com/watch?v=6ttypoLyRaU">
+    <img width="400" alt="screen shot 2017-08-10 at 01 42 35" src="https://user-images.githubusercontent.com/113730/29156011-7c9b4ae2-7d6d-11e7-9c09-f98b5c51c72e.png">
+    <br>
+    <em>Watch the talk</em>
+  </a>
+</p>
+
+<br>
+
+<p align="center">
   <img alt="The Ubeer client" src="screenshots/ubeer.png" width="400">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img alt="GraphiQL" src="screenshots/graphiql.png" width="400">
